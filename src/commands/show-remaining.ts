@@ -24,7 +24,7 @@ export const showRemaining = async (interaction: ChatInputCommandInteraction) =>
         createEmbed({
             color: COLORS.info,
             title: '📜 Remaining names',
-            description: '🏁 All names have been drawn! Use `/roll` to start a new round.'
+            description: '🏁 All names have been drawn! Use `/spin` to start a new round.'
         })
       ],
       flags: 'Ephemeral',

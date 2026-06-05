@@ -6,7 +6,7 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import 'dotenv/config';
-import {setNames, addName, removeName, roll, reset, suggest, pick, showRemaining, showHistory } from "./commands";
+import {setNames, addName, removeName, spin, reset, suggest, pick, showRemaining, showHistory } from './commands';
 import {COLORS, createEmbed} from './helper';
 import {loadData} from './persistence';
 
@@ -50,7 +50,7 @@ const commands = [
     .setDescription('Show all remaining names')
     .toJSON(),
   new SlashCommandBuilder()
-    .setName('roll')
+    .setName('spin')
     .setDescription('Randomly pick a name and cross it off')
     .toJSON(),
   new SlashCommandBuilder()
@@ -74,7 +74,7 @@ const commands = [
 
 const interactionHandlers = {
   setnames: setNames,
-  roll: roll,
+  spin: spin,
   suggest: suggest,
   pick: pick,
   history: showHistory,
@@ -94,7 +94,7 @@ async function registerCommands(): Promise<void> {
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.once('ready', () => {
+client.once('clientReady', () => {
   console.log(`🤖 Lotty is online as ${client.user?.tag}`);
 });
 

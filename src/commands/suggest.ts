@@ -14,7 +14,7 @@ export const suggest = (interaction: ChatInputCommandInteraction) => {
                   color: COLORS.suggest,
                   title: `💡 Suggestion: **${suggestion}**`,
                   description: `
-                    This name will **not** be crossed off. Use \`/roll\` to draw for real.\n\n
+                    This name will **not** be crossed off. Use \`/spin\` to draw for real.\n\n
                     **${remaining.length}** name(s) still available.
                   `
               }),
@@ -28,7 +28,7 @@ export const suggest = (interaction: ChatInputCommandInteraction) => {
         createEmbed({
           color: COLORS.info,
           title: '🔄 All names have been drawn!',
-          description: 'Use `/roll` to start a new round.'
+          description: 'Use `/spin` to start a new round.'
         })
       ]
     });

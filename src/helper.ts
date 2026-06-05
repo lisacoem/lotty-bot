@@ -1,5 +1,5 @@
 import {ColorResolvable, EmbedBuilder, EmbedField} from "discord.js";
-import {StoredData} from "./persistence";
+import {ApplicationData} from "./persistence";
 
 export type EmbedOptions = {
     title: string,
@@ -38,7 +38,7 @@ export const getRandomElement = <T>(list: T[]): T => {
     return list[randomIndex];
 }
 
-export const getRemainingNames = ({names, history}: StoredData): string[] => {
+export const getRemainingNames = ({names, history}: ApplicationData): string[] => {
     return names.filter((name) => !history.includes(name));
 }
 

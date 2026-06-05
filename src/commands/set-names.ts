@@ -17,7 +17,7 @@ export const setNames = async (interaction: ChatInputCommandInteraction) => {
         });
     }
 
-    saveData({ names, history: [] }); 
+    saveData({ names, history: [] });
 
     const formattedNameList = names
         .map((name, index) => `${index + 1}. ${name}`)

@@ -2,7 +2,7 @@ export * from './add-name';
 export * from './pick';
 export * from './remove-name';
 export * from './reset';
-export * from './roll';
+export * from './spin';
 export * from './set-names';
 export * from './show-history';
 export * from './show-remaining';
