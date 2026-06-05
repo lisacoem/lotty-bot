@@ -1,9 +1,10 @@
 import {ChatInputCommandInteraction} from "discord.js";
 import {loadData} from "../persistence";
-import {createEmbed, COLORS} from "../helper";
+import {createEmbed, COLORS, getInteractionId} from "../helper";
 
 export const showHistory = async (interaction: ChatInputCommandInteraction) => {
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
 
     if (data.history.length) {
       return interaction.reply({

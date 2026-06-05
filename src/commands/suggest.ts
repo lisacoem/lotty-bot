@@ -1,9 +1,10 @@
-import {COLORS, createEmbed, getRandomElement, getRemainingNames} from '../helper';
+import {COLORS, createEmbed, getInteractionId, getRandomElement, getRemainingNames} from '../helper';
 import {ChatInputCommandInteraction} from 'discord.js';
 import {loadData} from '../persistence';
 
 export const suggest = (interaction: ChatInputCommandInteraction) => {
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
     const remaining = getRemainingNames(data);
 
     if (remaining.length) {

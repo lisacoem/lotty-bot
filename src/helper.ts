@@ -1,4 +1,4 @@
-import {ColorResolvable, EmbedBuilder, EmbedField} from "discord.js";
+import {ChatInputCommandInteraction, ColorResolvable, EmbedBuilder, EmbedField} from "discord.js";
 import {ApplicationData} from "./persistence";
 
 export type EmbedOptions = {
@@ -44,4 +44,8 @@ export const getRemainingNames = ({names, history}: ApplicationData): string[] =
 
 export const findName = (searchString: string, names: string[]) => {
     return names.find((name) => name.toLowerCase() === searchString.trim().toLowerCase());
+}
+
+export const getInteractionId = (interaction: ChatInputCommandInteraction) => {
+  return interaction.guildId ?? `dm_${interaction.user.id}`;
 }

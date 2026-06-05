@@ -1,9 +1,10 @@
 import {ChatInputCommandInteraction} from "discord.js";
 import {loadData} from "../persistence";
-import {createEmbed, COLORS, getRemainingNames} from "../helper";
+import {createEmbed, COLORS, getRemainingNames, getInteractionId} from "../helper";
 
 export const showRemaining = async (interaction: ChatInputCommandInteraction) => {
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
     const remaining = getRemainingNames(data);
 
     if (remaining.length) {

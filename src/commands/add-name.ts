@@ -1,10 +1,11 @@
-import {COLORS, createEmbed, findName, getRemainingNames} from '../helper';
+import {COLORS, createEmbed, findName, getInteractionId, getRemainingNames} from '../helper';
 import {ChatInputCommandInteraction} from 'discord.js';
 import {loadData, saveData} from '../persistence';
 
 export const addName = async (interaction: ChatInputCommandInteraction) => {
     const input = interaction.options.getString('name', true);
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
 
     const matchingName = findName(input, data.names);
 
@@ -24,7 +25,7 @@ export const addName = async (interaction: ChatInputCommandInteraction) => {
     const name = input.trim();
 
     data.names.push(name);
-    saveData(data);
+    saveData(interactionId, data);
 
     const remaining = getRemainingNames(data);
 

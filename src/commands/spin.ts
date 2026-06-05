@@ -1,14 +1,15 @@
 import {ChatInputCommandInteraction} from 'discord.js';
 import {loadData, saveData} from '../persistence';
-import {COLORS, createEmbed, getRandomElement, getRemainingNames} from '../helper';
+import {COLORS, createEmbed, getInteractionId, getRandomElement, getRemainingNames} from '../helper';
 
 export const spin = async (interaction: ChatInputCommandInteraction) => {
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
     let remaining = getRemainingNames(data);
 
     if (!remaining.length) {
       const pick = getRandomElement(data.names);
-      saveData({ names: data.names, history: [pick] });
+      saveData(interactionId, { names: data.names, history: [pick] });
 
       await interaction.reply({
         embeds: [createEmbed({
@@ -30,7 +31,7 @@ export const spin = async (interaction: ChatInputCommandInteraction) => {
 
     const pick = getRandomElement(remaining);
     data.history.push(pick);
-    saveData(data);
+    saveData(interactionId, data);
 
     const totalRemaining = remaining.length - 1
 

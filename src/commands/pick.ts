@@ -1,10 +1,12 @@
 import {ChatInputCommandInteraction} from 'discord.js';
 import {loadData, saveData} from '../persistence';
-import {COLORS, createEmbed, findName, getRemainingNames} from '../helper';
+import {COLORS, createEmbed, findName, getInteractionId, getRemainingNames} from '../helper';
 
 export const pick = (interaction: ChatInputCommandInteraction) => {
-    const data = loadData();
+    const interactionId = getInteractionId(interaction)
+    const data = loadData(interactionId);
     const input = interaction.options.getString('name', true).trim();
+
     const remaining = getRemainingNames(data)
     const matchingName = findName(input, remaining);
 
@@ -36,7 +38,7 @@ export const pick = (interaction: ChatInputCommandInteraction) => {
     }
 
     data.history.push(matchingName);
-    saveData(data);
+    saveData(interactionId, data);
 
     const totalRemaining = remaining.length - 1
 

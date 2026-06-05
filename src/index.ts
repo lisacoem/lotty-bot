@@ -6,8 +6,8 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import 'dotenv/config';
-import {setNames, addName, removeName, spin, reset, suggest, pick, showRemaining, showHistory } from './commands';
-import {COLORS, createEmbed} from './helper';
+import {setNames, addName, removeName, spin, reset, suggest, pick, showRemaining, showHistory} from './commands';
+import {COLORS, createEmbed, getInteractionId} from './helper';
 import {loadData} from './persistence';
 
 const TOKEN = process.env.DISCORD_TOKEN!;
@@ -100,8 +100,8 @@ client.once('clientReady', () => {
 
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
-
-  const data = loadData();
+  const interactionId = getInteractionId(interaction)
+  const data = loadData(interactionId);
 
   if (interaction.commandName !== 'setnames' && interaction.commandName !== 'add' && data.names.length === 0) {
     return interaction.reply({

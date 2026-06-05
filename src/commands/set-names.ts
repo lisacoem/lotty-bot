@@ -1,8 +1,9 @@
 import {ChatInputCommandInteraction} from "discord.js";
 import {saveData} from "../persistence";
-import {createEmbed, COLORS} from "../helper";
+import {createEmbed, COLORS, getInteractionId} from "../helper";
 
 export const setNames = async (interaction: ChatInputCommandInteraction) => {
+    const interactionId = getInteractionId(interaction);
     const input = interaction.options.getString('names', true);
     const names = input.split(',').map(n => n.trim()).filter(Boolean);
 
@@ -17,7 +18,7 @@ export const setNames = async (interaction: ChatInputCommandInteraction) => {
         });
     }
 
-    saveData({ names, history: [] });
+    saveData(interactionId, { names, history: [] });
 
     const formattedNameList = names
         .map((name, index) => `${index + 1}. ${name}`)
