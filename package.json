@@ -1,0 +1,20 @@
+{
+  "name": "lotty-discord-bot",
+  "version": "1.0.0",
+  "description": "Lotty – Discord name picker without repetition",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}
