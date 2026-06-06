@@ -2,9 +2,9 @@ import {ChatInputCommandInteraction} from "discord.js";
 import {loadData, saveData} from "../persistence";
 import {createEmbed, COLORS, getInteractionId} from "../helper";
 
-export const reset = (interaction: ChatInputCommandInteraction) => {
+export const reset = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = loadData(interactionId);
+    const data = await loadData(interactionId);
     const oldHistory = [...data.history];
   
     data.history = [];

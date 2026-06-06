@@ -4,7 +4,7 @@ import {createEmbed, COLORS, getRemainingNames, getInteractionId} from "../helpe
 
 export const showRemaining = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = loadData(interactionId);
+    const data = await loadData(interactionId);
     const remaining = getRemainingNames(data);
 
     if (remaining.length) {

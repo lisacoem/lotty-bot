@@ -2,9 +2,9 @@ import {ChatInputCommandInteraction} from 'discord.js';
 import {loadData, saveData} from '../persistence';
 import {COLORS, createEmbed, findName, getInteractionId, getRemainingNames} from '../helper';
 
-export const pick = (interaction: ChatInputCommandInteraction) => {
+export const pick = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = loadData(interactionId);
+    const data = await loadData(interactionId);
     const input = interaction.options.getString('name', true).trim();
 
     const remaining = getRemainingNames(data)

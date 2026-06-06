@@ -9,6 +9,4 @@ COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
 
-ENV DB_PATH=/data/lotty.db
-
 CMD ["node", "dist/index.js"]
