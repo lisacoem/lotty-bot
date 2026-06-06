@@ -4,7 +4,7 @@ import {createEmbed, COLORS, getInteractionId} from "../helper";
 
 export const reset = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = await loadData(interactionId);
+    const data = loadData(interactionId);
     const oldHistory = [...data.history];
   
     data.history = [];

@@ -5,7 +5,7 @@ import {loadData, saveData} from '../persistence';
 export const addName = async (interaction: ChatInputCommandInteraction) => {
     const input = interaction.options.getString('name', true);
     const interactionId = getInteractionId(interaction)
-    const data = await loadData(interactionId);
+    const data = loadData(interactionId);
 
     const matchingName = findName(input, data.names);
 

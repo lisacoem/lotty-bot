@@ -4,7 +4,7 @@ import {COLORS, createEmbed, findName, getInteractionId, getRemainingNames} from
 
 export const pick = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = await loadData(interactionId);
+    const data = loadData(interactionId);
     const input = interaction.options.getString('name', true).trim();
 
     const remaining = getRemainingNames(data)

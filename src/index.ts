@@ -101,7 +101,7 @@ client.once('clientReady', () => {
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
   const interactionId = getInteractionId(interaction)
-  const data = await loadData(interactionId);
+  const data = loadData(interactionId);
 
   if (interaction.commandName !== 'setnames' && interaction.commandName !== 'add' && data.names.length === 0) {
     return interaction.reply({

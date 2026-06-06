@@ -4,7 +4,7 @@ import {COLORS, createEmbed, getInteractionId, getRandomElement, getRemainingNam
 
 export const spin = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = await loadData(interactionId);
+    const data = loadData(interactionId);
     let remaining = getRemainingNames(data);
 
     if (!remaining.length) {

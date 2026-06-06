@@ -4,7 +4,7 @@ import {loadData} from '../persistence';
 
 export const suggest = async (interaction: ChatInputCommandInteraction) => {
     const interactionId = getInteractionId(interaction)
-    const data = await loadData(interactionId);
+    const data = loadData(interactionId);
     const remaining = getRemainingNames(data);
 
     if (remaining.length) {
