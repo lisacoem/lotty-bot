@@ -15,7 +15,6 @@ export const showHistory = async (interaction: ChatInputCommandInteraction) => {
               description: data.history.map((name, index) => `${index + 1}. ~~${name}~~`).join('\n')
             })
           ],
-        flags: 'Ephemeral',
       });
     }
 

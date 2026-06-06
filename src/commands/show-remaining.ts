@@ -16,7 +16,6 @@ export const showRemaining = async (interaction: ChatInputCommandInteraction) =>
               description: remaining.map((name, index) => `${index + 1}. ${name}`).join('\n')
             })
           ],
-        flags: 'Ephemeral',
       });
     }
 
@@ -28,6 +27,5 @@ export const showRemaining = async (interaction: ChatInputCommandInteraction) =>
             description: '🏁 All names have been drawn! Use `/spin` to start a new round.'
         })
       ],
-      flags: 'Ephemeral',
     });
 }

@@ -20,7 +20,6 @@ export const suggest = async (interaction: ChatInputCommandInteraction) => {
                   `
               }),
           ],
-          flags: 'Ephemeral',
         })
     }
 

@@ -11,7 +11,7 @@ export const pick = async (interaction: ChatInputCommandInteraction) => {
     const matchingName = findName(input, remaining);
 
     if (!matchingName) {
-      const alreadyPicked = !!findName(input, data.history);
+      const alreadyPicked = findName(input, data.history);
       if (alreadyPicked) {
         return interaction.reply({
             embeds: [
