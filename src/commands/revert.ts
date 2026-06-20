@@ -1,5 +1,5 @@
 import {ChatInputCommandInteraction} from 'discord.js';
-import {loadData, saveData} from '../persistence';
+import {loadData, removeFromHistory} from '../persistence';
 import {COLORS, createEmbed, findName, getInteractionId, getRemainingNames} from '../helper';
 
 export const revert = async (interaction: ChatInputCommandInteraction) => {
@@ -27,19 +27,19 @@ export const revert = async (interaction: ChatInputCommandInteraction) => {
       });
     }
 
-    data.history = data.history.filter((name) => name !== matchingName);
-    saveData(interactionId, data);
+    removeFromHistory(interactionId, matchingName); 
 
-    const remaining = getRemainingNames(data);
+    const updated = loadData(interactionId);
+    const remaining = getRemainingNames(updated);
 
     return interaction.reply({
       embeds: [
           createEmbed({
                 color: COLORS.success,
-                title: `Reverted: **${matchingName}**`,
+                title: `↩️ Reverted: **${matchingName}**`,
                 description: `**${matchingName}** is available again. **${remaining.length}** name(s) remaining.`,
-                fields: data.history.length
-                    ? [{ name: '📜 Already crossed off', value: data.history.join(', '), inline: true }]
+                fields: updated.history.length
+                    ? [{ name: '📜 Already crossed off', value: updated.history.join(', '), inline: true }]
                     : [],
           }),
       ],

@@ -47,6 +47,7 @@ export type NameEntry = {
 };
 
 export function loadData(interactionId: string): ApplicationData {
+  // "names" for spin/suggest purposes excludes exempt members
   const names = (
     db.prepare('SELECT name FROM names WHERE interaction_id = ? AND is_timeout = 0 ORDER BY id')
       .all(interactionId) as { name: string }[]
@@ -59,9 +60,10 @@ export function loadData(interactionId: string): ApplicationData {
 }
 
 export function loadAllNames(interactionId: string): NameEntry[] {
-  const rows = db.prepare('SELECT name, is_timeout FROM names WHERE interaction_id = ? ORDER BY id')
-    .all(interactionId) as { name: string; is_timeout: number }[];
-  return rows.map(r => ({ name: r.name, isTimeout: !!r.is_timeout }));
+  return (
+    db.prepare('SELECT name, is_timeout as isTimeout FROM names WHERE interaction_id = ? ORDER BY id')
+      .all(interactionId) as { name: string; isTimeout: number }[]
+  ).map(r => ({ name: r.name, isTimeout: !!r.isTimeout }));
 }
 
 export function saveData(interactionId: string, data: ApplicationData): void {
@@ -79,6 +81,10 @@ export function saveData(interactionId: string, data: ApplicationData): void {
 
 export function insertHistory(interactionId: string, name: string): void {
   db.prepare('INSERT OR IGNORE INTO history (interaction_id, name) VALUES (?, ?)').run(interactionId, name);
+}
+
+export function removeFromHistory(interactionId: string, name: string): void {
+  db.prepare('DELETE FROM history WHERE interaction_id = ? AND name = ?').run(interactionId, name);
 }
 
 export function clearHistory(interactionId: string): void {
