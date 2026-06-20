@@ -24,6 +24,7 @@ import {
 } from './commands';
 import {COLORS, createEmbed, getInteractionId} from './helper';
 import {loadData} from './persistence';
+import {help} from './commands/help';
 
 const TOKEN = process.env.DISCORD_TOKEN!;
 const CLIENT_ID = process.env.CLIENT_ID!;
@@ -132,6 +133,7 @@ const commands = [
 ];
 
 const interactionHandlers = {
+  help: help,
   setnames: setNames,
   spin: spin,
   suggest: suggest,
