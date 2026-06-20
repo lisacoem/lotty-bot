@@ -30,6 +30,10 @@ const CLIENT_ID = process.env.CLIENT_ID!;
 
 const commands = [
   new SlashCommandBuilder()
+    .setName('help')
+    .setDescription('Show all available commands')
+    .toJSON(),
+  new SlashCommandBuilder()
     .setName('setnames')
     .setDescription('Set the list of names (comma-separated)')
     .addStringOption(opt =>
@@ -163,7 +167,9 @@ client.on('interactionCreate', async interaction => {
   const interactionId = getInteractionId(interaction)
   const data = loadData(interactionId);
 
-  if (interaction.commandName !== 'setnames' && interaction.commandName !== 'add' && data.names.length === 0) {
+  const NO_NAMES_REQUIRED_COMMANDS = ['setnames', 'add', 'restorehistory', 'help']
+
+  if (!NO_NAMES_REQUIRED_COMMANDS.includes(interaction.commandName) && !data.names.length) {
     return interaction.reply({
       embeds: [
         createEmbed({
