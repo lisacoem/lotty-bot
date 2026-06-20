@@ -6,7 +6,22 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import 'dotenv/config';
-import {setNames, addName, removeName, spin, reset, suggest, pick, showRemaining, showHistory} from './commands';
+import {
+  setNames,
+  addName,
+  removeName,
+  spin,
+  reset,
+  suggest,
+  pick,
+  showRemaining,
+  showHistory,
+  restoreHistoryCommand,
+  timeout,
+  reactivate,
+  showNames,
+  revert
+} from './commands';
 import {COLORS, createEmbed, getInteractionId} from './helper';
 import {loadData} from './persistence';
 
@@ -70,6 +85,46 @@ const commands = [
     .setName('reset')
     .setDescription('Reset the draw (all names become available again)')
     .toJSON(),
+  new SlashCommandBuilder()
+    .setName('timeout')
+    .setDescription('Send a name into timeout — excluded from /spin and /suggest')
+    .addStringOption(opt =>
+      opt.setName('name')
+        .setDescription('The name to send into timeout')
+        .setRequired(true)
+    )
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('reactivate')
+    .setDescription('Bring a name back from timeout')
+    .addStringOption(opt =>
+      opt.setName('name')
+        .setDescription('The name to reactivate')
+        .setRequired(true)
+    )
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('restorehistory')
+    .setDescription('Manually restore history from a comma-separated list of names')
+    .addStringOption(opt =>
+      opt.setName('names')
+        .setDescription('e.g. Alice, Bob, Charlie')
+        .setRequired(true)
+    )
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('names')
+    .setDescription('Show all names, including who is in timeout')
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('revert')
+    .setDescription('Undo crossing off a name — makes it available again')
+    .addStringOption(opt =>
+      opt.setName('name')
+        .setDescription('The name to bring back')
+        .setRequired(true)
+    )
+    .toJSON(),
 ];
 
 const interactionHandlers = {
@@ -82,6 +137,11 @@ const interactionHandlers = {
   reset: reset,
   add: addName,
   remove: removeName,
+  timeout: timeout,
+  reactivate: reactivate,
+  restorehistory: restoreHistoryCommand,
+  names: showNames,
+  revert: revert,
 };
 
 async function registerCommands(): Promise<void> {
