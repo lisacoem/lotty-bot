@@ -1,9 +1,10 @@
 import {
   Client,
-  GatewayIntentBits, InteractionReplyOptions,
+  GatewayIntentBits,
+  InteractionReplyOptions,
   REST,
   Routes,
-  SlashCommandBuilder,
+  SlashCommandBuilder, TextChannel,
 } from 'discord.js';
 import 'dotenv/config';
 import {
@@ -22,12 +23,14 @@ import {
   showNames,
   revert
 } from './commands';
-import {COLORS, createEmbed, getInteractionId} from './helper';
+import {COLORS, createEmbed, getInteractionId, getRandomElement} from './helper';
 import {loadData} from './persistence';
 import {help} from './commands/help';
+import {greetings} from './greetings';
 
 const TOKEN = process.env.DISCORD_TOKEN!;
 const CLIENT_ID = process.env.CLIENT_ID!;
+const SPECIAL_ROLE_ID = process.env.SPECIAL_ROLE_ID;
 
 const commands = [
   new SlashCommandBuilder()
@@ -158,7 +161,12 @@ async function registerCommands(): Promise<void> {
 }
 
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+  ]
+});
 
 client.once('clientReady', () => {
   console.log(`🤖 Lotty is online as ${client.user?.tag}`);
@@ -189,6 +197,19 @@ client.on('interactionCreate', async interaction => {
   if (handler) {
     try {
       await handler(interaction);
+
+      if (SPECIAL_ROLE_ID && greetings.length) {
+        const member = interaction.member;
+        const hasRole = member?.roles instanceof Array
+          ? member.roles.includes(SPECIAL_ROLE_ID)
+          : member?.roles.cache.has(SPECIAL_ROLE_ID);
+
+        if (hasRole) {
+          await interaction.followUp({
+            content: getRandomElement(greetings),
+          });
+        }
+      }
     } catch (err) {
       console.error(`❌ Error in /${interaction.commandName}:`, err);
 
